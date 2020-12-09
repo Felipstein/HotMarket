@@ -11,6 +11,11 @@ public class MainFrame extends UIFrame {
 	public MainFrame() {
 		super("HotMarket", new Dimension(800, 600));
 		this.configureFrame(true, true);
+		this.configureComponents();
+	}
+	
+	private void configureComponents() {
+		
 	}
 	
 }

@@ -15,7 +15,7 @@ public class Main {
 		
 		UIFrame.loadWindowsForm();
 		
-		MainFrame frame = new MainFrame();
+		MainFrame frame = new MainFrame();	
 		
 	}
 	

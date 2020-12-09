@@ -5,6 +5,10 @@ import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 import java.util.Map.Entry;
 
 import javax.swing.JComponent;
@@ -22,11 +26,14 @@ public class UIPanel extends JPanel {
 	
 	private ComponentList components;
 	
+	private Map<String, UIPanel> panels;
+	
 	public UIPanel(UIFrame frame, Dimension dimension) {
 		super();
 		this.frame = frame;
 		this.dimension = dimension;
 		this.components = new ComponentList();
+		this.panels = new HashMap<>();
 		this.addComponentListener(new ComponentAdapter() {
 			@Override
 			public void componentResized(ComponentEvent var1) {
@@ -95,6 +102,41 @@ public class UIPanel extends JPanel {
 	
 	public boolean hasComponent(String componentId) {
 		return this.components.hasComponent(componentId);
+	}
+	
+	public Set<UIPanel> getPanels() {
+		Set<UIPanel> panels = new HashSet<>();
+		this.panels.values().forEach(panel -> panels.add(panel));
+		return panels;
+	}
+	
+	public UIPanel getPanel(String panelName) {
+		if(panels.containsKey(panelName)) {
+			return panels.get(panelName);
+		}
+		return null;
+	}
+	
+	public boolean hasPanel(String panelName) {
+		return getPanel(panelName) != null;
+	}
+	
+	public UIPanel addPanel(String panelName, Dimension dimension) {
+		UIPanel panel = new UIPanel(frame, dimension);
+		this.addPanel(panelName, panel);
+		return panel;
+	}
+	
+	public void addPanel(String panelName, UIPanel panel) {
+		this.panels.put(panelName, panel);
+	}
+	
+	public void removePanel(String panel) {
+		this.panels.remove(panel);
+	}
+	
+	public Map<String, UIPanel> getPanelsMap(){
+		return panels;
 	}
 	
 	public ComponentList getComponentList() {
