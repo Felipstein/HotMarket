@@ -2,7 +2,7 @@ package com.hotmarket;
 
 import com.hotmarket.files.FileItems;
 import com.hotmarket.files.FileLog;
-import com.hotmarket.frames.market.MainFrame;
+import com.hotmarket.frames.market.login.LoginFrame;
 import com.hotmarket.frames.ui.UIFrame;
 import com.hotmarket.logger.Logger;
 
@@ -15,7 +15,9 @@ public class Main {
 		
 		UIFrame.loadWindowsForm();
 		
-		MainFrame frame = new MainFrame();	
+		LoginFrame frame = new LoginFrame();
+		
+		frame.setVisible(true);
 		
 	}
 	

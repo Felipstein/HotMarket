@@ -6,7 +6,7 @@ import com.hotmarket.frames.ui.UIPanel;
 
 public class UILabel extends JLabel {
 	
-	public static final int DEFAULT_HEIGHT = 8;
+	public static final int DEFAULT_HEIGHT = 14;
 	
 	private static final long serialVersionUID = -5393798703695652827L;
 	

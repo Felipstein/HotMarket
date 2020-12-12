@@ -5,6 +5,8 @@ import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 import javax.swing.JFrame;
 import javax.swing.UIManager;
@@ -20,6 +22,10 @@ public class UIFrame extends JFrame {
 	public static final int MOUSE_RELEASED = 1;
 	public static final int KEY_PRESSED = 0;
 	public static final int KEY_RELEASED = 1;
+	
+	public UIFrame(String title, int width, int height) {
+		this(title, new Dimension(width, height));
+	}
 	
 	public UIFrame(String title, Dimension dimension) {
 		super(title);
@@ -56,9 +62,20 @@ public class UIFrame extends JFrame {
 				UIFrame.this.onMousePressed(e.getButton(), e.getX(), e.getY(), 1);
 			}
 		});
+		this.addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent var1) {
+				UIFrame.this.onClosing();
+			}
+		});
+	}
+	
+	protected void exitOnClose() {
+		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 	}
 	
 	public void configureFrame(boolean resizable, boolean visible) {
+		this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 		this.setLocationRelativeTo(null);
 		this.setResizable(resizable);
 		this.setVisible(visible);
@@ -71,6 +88,22 @@ public class UIFrame extends JFrame {
 	public void onMousePressed(int mouseButton, int x, int y, int status) {}
 	
 	public void onKeyTyped(int keyCode, char keyChar, int status) {}
+	
+	public void onClosing() {}
+	
+	public void onDisable() {}
+	
+	public void onEnable() {}
+	
+	@Override
+	public void setEnabled(boolean enabled) {
+		if(enabled) {
+			this.onEnable();
+		} else {
+			this.onDisable();
+		}
+		super.setEnabled(enabled);
+	}
 	
 	public UIPanel getContentPane() {
 		return (UIPanel) super.getContentPane();

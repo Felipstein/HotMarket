@@ -1,12 +1,13 @@
 package com.hotmarket.frames.ui.components;
 
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 
 import com.hotmarket.frames.ui.UIPanel;
 
-public abstract class UIButton extends JButton implements ActionListener {
+public class UIButton extends JButton implements ActionListener {
 	
 	private static final long serialVersionUID = -6914147620239198331L;
 	
@@ -30,5 +31,8 @@ public abstract class UIButton extends JButton implements ActionListener {
 	public boolean hasPanel() {
 		return panel != null;
 	}
+	
+	@Override
+	public void actionPerformed(ActionEvent e) {}
 	
 }

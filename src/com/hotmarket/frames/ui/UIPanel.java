@@ -8,9 +8,10 @@ import java.awt.event.MouseEvent;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
 import java.util.Map.Entry;
+import java.util.Set;
 
+import javax.swing.BorderFactory;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 
@@ -28,20 +29,31 @@ public class UIPanel extends JPanel {
 	
 	private Map<String, UIPanel> panels;
 	
+	public UIPanel(UIFrame frame, int x, int y, int width, int height) {
+		this(frame);
+		this.setBounds(x, y, width, height);
+	}
+	
 	public UIPanel(UIFrame frame, Dimension dimension) {
+		this(frame);
+		this.dimension = dimension;
+	}
+	
+	private UIPanel(UIFrame frame) {
 		super();
 		this.frame = frame;
-		this.dimension = dimension;
 		this.components = new ComponentList();
 		this.panels = new HashMap<>();
 		this.addComponentListener(new ComponentAdapter() {
 			@Override
 			public void componentResized(ComponentEvent var1) {
-				UIPanel.this.onResized();
+				UIPanel.this.panels.values().forEach(panel -> panel.onResized(true));
+				UIPanel.this.onResized(false);
 			}
 			@Override
 			public void componentMoved(ComponentEvent var1) {
-				UIPanel.this.onMoved();
+				UIPanel.this.panels.values().forEach(panel -> panel.onMoved(true));
+				UIPanel.this.onMoved(false);
 			}
 		});
 		this.addKeyListener(new InputListener() {
@@ -71,9 +83,9 @@ public class UIPanel extends JPanel {
 		this.setPreferredSize(dimension);
 	}
 	
-	public void onResized() {}
+	public void onResized(boolean domain) {}
 
-	public void onMoved() {}
+	public void onMoved(boolean domain) {}
 	
 	public void onMousePressed(int mouseButton, int x, int y, int status) {}
 	
@@ -81,9 +93,11 @@ public class UIPanel extends JPanel {
 
 	public void addComponent(String componentId, JComponent component) {
 		this.components.addComponent(componentId, component);
+		this.add(component);
 	}
 	
 	public void removeComponent(String componentId) {
+		this.remove(this.getComponent(componentId));
 		this.components.removeComponent(componentId);
 	}
 	
@@ -121,18 +135,27 @@ public class UIPanel extends JPanel {
 		return getPanel(panelName) != null;
 	}
 	
+	public UIPanel addPanel(String panelName, int x, int y, int width, int height) {
+		UIPanel panel = new UIPanel(frame, x, y, width, height);
+		this.addPanel(panelName, panel);
+		return panel;
+	}
+	
 	public UIPanel addPanel(String panelName, Dimension dimension) {
 		UIPanel panel = new UIPanel(frame, dimension);
 		this.addPanel(panelName, panel);
 		return panel;
 	}
 	
-	public void addPanel(String panelName, UIPanel panel) {
+	public UIPanel addPanel(String panelName, UIPanel panel) {
+		this.add(panel);
 		this.panels.put(panelName, panel);
+		return panel;
 	}
 	
-	public void removePanel(String panel) {
-		this.panels.remove(panel);
+	public void removePanel(String panelName) {
+		this.remove(this.getPanel(panelName));
+		this.panels.remove(panelName);
 	}
 	
 	public Map<String, UIPanel> getPanelsMap(){
@@ -149,6 +172,34 @@ public class UIPanel extends JPanel {
 	
 	public Dimension getDimension() {
 		return dimension;
+	}
+	
+	public boolean hasDimension() {
+		return dimension != null;
+	}
+	
+	public void setPerfectBorder(String title) {
+		if(title != null) {
+			this.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), title));
+		} else {
+			this.setBorder(BorderFactory.createEtchedBorder());
+		}
+	}
+	
+	public int getWidthFrame() {
+		return frame.getWidth();
+	}
+	
+	public int getHeightFrame() {
+		return frame.getHeight();
+	}
+	
+	public int getWidthContentPane() {
+		return frame.getContentPane().getWidth();
+	}
+	
+	public int getHeightContentPane() {
+		return frame.getContentPane().getHeight();
 	}
 	
 }
