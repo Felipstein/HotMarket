@@ -18,7 +18,6 @@ public class Main {
 		LoginFrame frame = new LoginFrame();
 		
 		frame.setVisible(true);
-		
 	}
 	
 	public static void shutdown() {

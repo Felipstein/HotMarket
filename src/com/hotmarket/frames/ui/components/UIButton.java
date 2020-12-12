@@ -15,10 +15,14 @@ public class UIButton extends JButton implements ActionListener {
 	private UIPanel panel;
 	
 	public UIButton(UIPanel panel, String text, int x, int y, int width, int height) {
+		this(panel, text, x, y, width, height, null);
+	}
+	
+	public UIButton(UIPanel panel, String text, int x, int y, int width, int height, ConsumerAction action) {
 		super(text);
 		this.panel = panel;
 		this.setBounds(x, y, width, height);
-		this.addActionListener(this);
+		this.addActionListener(action == null ? this : action);
 	}
 	
 	public UIButton(String text, int x, int y, int width, int height) {
