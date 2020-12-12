@@ -50,6 +50,7 @@ public class UIFormattedTextField extends JFormattedTextField implements ActionL
 	private void constructor(UIPanel panel, int x, int y, int width, int height) {
 		this.panel = panel;
 		this.setBounds(x, y, width, height);
+		this.setFocusLostBehavior(PERSIST);
 		this.addKeyListener(new InputListener() {
 			@Override
 			public void keyPressed(KeyEvent e) {

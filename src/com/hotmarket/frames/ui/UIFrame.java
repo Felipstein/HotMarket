@@ -23,6 +23,8 @@ public class UIFrame extends JFrame {
 	public static final int KEY_PRESSED = 0;
 	public static final int KEY_RELEASED = 1;
 	
+	protected UIPanel pane;
+	
 	public UIFrame(String title, int width, int height) {
 		this(title, new Dimension(width, height));
 	}
@@ -31,7 +33,7 @@ public class UIFrame extends JFrame {
 		super(title);
 		UIPanel contentPane = new UIPanel(this, dimension);
 		contentPane.configurePanel();
-		this.setContentPane(contentPane);
+		this.setContentPane(this.pane = contentPane);
 		this.pack();
 		this.addComponentListener(new ComponentAdapter() {
 			@Override

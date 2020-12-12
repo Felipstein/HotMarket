@@ -1,4 +1,4 @@
-package com.hotmarket.client;
+package com.hotmarket.client.items;
 
 import com.hotmarket.files.FileItems;
 

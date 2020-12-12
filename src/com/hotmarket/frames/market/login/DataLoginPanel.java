@@ -4,6 +4,7 @@ import java.text.ParseException;
 
 import javax.swing.text.MaskFormatter;
 
+import com.hotmarket.client.Cashier;
 import com.hotmarket.frames.ui.UIFrame;
 import com.hotmarket.frames.ui.UIPanel;
 import com.hotmarket.frames.ui.components.UIFormattedTextField;
@@ -27,7 +28,7 @@ public class DataLoginPanel extends UIPanel {
 		
 		MaskFormatter format;
 		try {
-			format = new MaskFormatter("");
+			format = new MaskFormatter("####");
 		} catch (ParseException e) {
 			format = new MaskFormatter();
 			e.printStackTrace();
@@ -39,7 +40,22 @@ public class DataLoginPanel extends UIPanel {
 		
 		this.addComponent("tfield1", textField1);
 		this.addComponent("tfield2", textField2);
-		
+	}
+	
+	public boolean reportedNumber() {
+		String text = ((UIFormattedTextField) this.getComponentList().getComponent("tfield1")).getText();
+		return text != null && !text.trim().isEmpty();
+	}
+	
+	public Cashier getCashier() {
+		int number;
+		try {
+			number = Integer.parseInt(((UIFormattedTextField) this.getComponentList().getComponent("tfield1")).getText().trim());
+		} catch(NumberFormatException e) {
+			throw new Error("O esperado no campo Número do caixa era apenas números, mas houve um erro no processo.");
+		}
+		String name = ((UITextField) this.getComponentList().getComponent("tfield2")).getText();
+		return new Cashier(number, name);
 	}
 	
 }

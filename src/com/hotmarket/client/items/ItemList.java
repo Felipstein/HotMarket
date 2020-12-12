@@ -1,4 +1,4 @@
-package com.hotmarket.client;
+package com.hotmarket.client.items;
 
 import java.util.ArrayList;
 import java.util.List;
