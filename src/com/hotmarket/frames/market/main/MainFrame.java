@@ -2,8 +2,8 @@ package com.hotmarket.frames.market.main;
 
 import java.awt.Dimension;
 
+import com.hotmarket.Main;
 import com.hotmarket.frames.ui.UIFrame;
-import com.hotmarket.logger.Logger;
 
 public class MainFrame extends UIFrame {
 	
@@ -21,8 +21,7 @@ public class MainFrame extends UIFrame {
 	
 	@Override
 	public void onClosing() {
-		Logger.logger.info("Finalizando...");
-		System.exit(0);
+		Main.shutdown();
 	}
 	
 }

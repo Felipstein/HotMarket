@@ -21,4 +21,9 @@ public class Main {
 		
 	}
 	
+	public static void shutdown() {
+		Logger.logger.info("Finalizando...");
+		System.exit(0);
+	}
+	
 }

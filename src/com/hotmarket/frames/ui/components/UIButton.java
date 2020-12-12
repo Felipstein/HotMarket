@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 
+import com.hotmarket.frames.recicle.ConsumerAction;
 import com.hotmarket.frames.ui.UIPanel;
 
 public class UIButton extends JButton implements ActionListener {
@@ -30,6 +31,10 @@ public class UIButton extends JButton implements ActionListener {
 	
 	public boolean hasPanel() {
 		return panel != null;
+	}
+	
+	public void addActionListener(ConsumerAction action) {
+		super.addActionListener(action);
 	}
 	
 	@Override

@@ -29,9 +29,9 @@ public class UIFrame extends JFrame {
 	
 	public UIFrame(String title, Dimension dimension) {
 		super(title);
-		UIPanel panel = new UIPanel(this, dimension);
-		this.setContentPane(panel);
-		panel.configurePanel();
+		UIPanel contentPane = new UIPanel(this, dimension);
+		contentPane.configurePanel();
+		this.setContentPane(contentPane);
 		this.pack();
 		this.addComponentListener(new ComponentAdapter() {
 			@Override
@@ -105,6 +105,7 @@ public class UIFrame extends JFrame {
 		super.setEnabled(enabled);
 	}
 	
+	@Override
 	public UIPanel getContentPane() {
 		return (UIPanel) super.getContentPane();
 	}
