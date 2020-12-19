@@ -20,6 +20,7 @@ public class UILabel extends JLabel {
 		this.initX = x;
 		this.initY = y;
 		this.setBounds(x, y, getTextWidth(), DEFAULT_HEIGHT);
+		this.setFocusable(false);
 	}
 	
 	public UILabel(String text, int x, int y) {

@@ -40,7 +40,7 @@ public class LoginFrame extends UIFrame {
 					((UIFormattedTextField) this.dataLoginPanel.getComponentList().getComponent("tfield1")).setText("");
 				} else {
 					this.dispose();
-					new MainFrame(dataLoginPanel.getCashier());
+					new MainFrame(dataLoginPanel.getCashier()).setVisible(true);
 				}
 			};
 		} catch(Error e) {

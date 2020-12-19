@@ -122,11 +122,15 @@ public class FileManager {
 					+ " ou igual à quantidade de linhas do arquivo.");
 		}
 		lines.remove(index);
-		for(int i = 0; i < size; i++) {
-			if(i == 0) {
-				overwriteText(file, lines.get(i));
-			} else {
-				appendText(file, lines.get(i), true);
+		if(size == 1) {
+			overwriteText(file, "");
+		} else {
+			for(int i = 0; i < size - 1; i++) {
+				if(i == 0) {
+					overwriteText(file, lines.get(i));
+				} else {
+					appendText(file, lines.get(i), true);
+				}
 			}
 		}
 	}

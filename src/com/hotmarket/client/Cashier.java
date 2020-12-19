@@ -11,6 +11,12 @@ public class Cashier {
 		}
 		this.number = number;
 		this.name = name;
+		if(this.name != null) {
+			this.name = this.name.trim();
+			if(this.name.isEmpty()) {
+				this.name = null;
+			}
+		}
 	}
 
 	public int getNumber() {
@@ -23,6 +29,11 @@ public class Cashier {
 	
 	public boolean hasName() {
 		return name != null;
+	}
+	
+	@Override
+	public String toString() {
+		return "Caixa " + number + (name != null ? ", Atendente " + name : "");
 	}
 	
 }

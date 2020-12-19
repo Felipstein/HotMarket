@@ -1,12 +1,15 @@
 package com.hotmarket.frames.ui;
 
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
@@ -16,6 +19,7 @@ import javax.swing.JComponent;
 import javax.swing.JPanel;
 
 import com.hotmarket.frames.ComponentList;
+import com.hotmarket.frames.KeyTriggerAction;
 import com.hotmarket.frames.recicle.InputListener;
 
 public class UIPanel extends JPanel {
@@ -26,6 +30,7 @@ public class UIPanel extends JPanel {
 	private Dimension dimension;
 	
 	private ComponentList components;
+	protected KeyTriggerAction triggers;
 	
 	private Map<String, UIPanel> panels;
 	
@@ -43,6 +48,7 @@ public class UIPanel extends JPanel {
 		super();
 		this.frame = frame;
 		this.components = new ComponentList();
+		this.triggers = new KeyTriggerAction();
 		this.panels = new HashMap<>();
 		this.addComponentListener(new ComponentAdapter() {
 			@Override
@@ -59,11 +65,11 @@ public class UIPanel extends JPanel {
 		this.addKeyListener(new InputListener() {
 			@Override
 			public void keyPressed(KeyEvent e) {
-				UIPanel.this.onKeyTyped(e.getKeyCode(), e.getKeyChar(), 0);
+				UIPanel.this.keyTyped(e.getKeyCode(), e.getKeyChar(), 0);
 			}
 			@Override
 			public void keyReleased(KeyEvent e) {
-				UIPanel.this.onKeyTyped(e.getKeyCode(), e.getKeyChar(), 1);
+				UIPanel.this.keyTyped(e.getKeyCode(), e.getKeyChar(), 1);
 			}
 		});
 		this.addMouseListener(new InputListener() {
@@ -90,7 +96,24 @@ public class UIPanel extends JPanel {
 	public void onMousePressed(int mouseButton, int x, int y, int status) {}
 	
 	public void onKeyTyped(int keyCode, char keyChar, int status) {}
-
+	
+	@SuppressWarnings("null")
+	private void keyTyped(int keyCode, char keyChar, int status) {
+		this.onKeyTyped(keyCode, keyChar, status);
+		if(this.triggers.KEY_STATUS == status) {
+			List<String> componentsId = this.triggers.getComponentsId(keyCode);
+			if(componentsId.isEmpty()) {
+				return;
+			}
+			for(String id : componentsId) {
+				JComponent component = this.components.getComponent(id);
+				if(component instanceof ActionListener) {
+					((ActionListener) component).actionPerformed(new ActionEvent(null, (Integer) null, null));
+				}
+			}
+		}
+	}
+	
 	public void addComponent(String componentId, JComponent component) {
 		this.components.addComponent(componentId, component);
 		this.add(component);
@@ -200,6 +223,10 @@ public class UIPanel extends JPanel {
 	
 	public int getHeightContentPane() {
 		return frame.getContentPane().getHeight();
+	}
+	
+	public KeyTriggerAction getTriggers() {
+		return triggers;
 	}
 	
 }

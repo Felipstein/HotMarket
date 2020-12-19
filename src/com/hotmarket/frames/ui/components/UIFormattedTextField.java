@@ -9,13 +9,16 @@ import javax.swing.JFormattedTextField;
 import javax.swing.text.MaskFormatter;
 
 import com.hotmarket.frames.recicle.InputListener;
+import com.hotmarket.frames.recicle.KeyPressedAction;
 import com.hotmarket.frames.ui.UIPanel;
 
-public class UIFormattedTextField extends JFormattedTextField implements ActionListener {
+public class UIFormattedTextField extends JFormattedTextField implements ActionListener, KeyPressedAction {
 	
 	private static final long serialVersionUID = -6991096326253918593L;
 	
 	private UIPanel panel;
+	
+	private KeyPressedAction keyPressedAction;
 	
 	public UIFormattedTextField(UIPanel panel, MaskFormatter format, int x, int y, int width, int height) {
 		super(format);
@@ -49,20 +52,26 @@ public class UIFormattedTextField extends JFormattedTextField implements ActionL
 	
 	private void constructor(UIPanel panel, int x, int y, int width, int height) {
 		this.panel = panel;
+		this.keyPressedAction = this;
 		this.setBounds(x, y, width, height);
 		this.setFocusLostBehavior(PERSIST);
 		this.addKeyListener(new InputListener() {
 			@Override
 			public void keyPressed(KeyEvent e) {
-				UIFormattedTextField.this.onKeyPressed(e.getKeyCode(), e.getKeyChar(), 0);
+				UIFormattedTextField.this.keyPressedAction.onKeyPressed(e.getKeyCode(), e.getKeyChar(), 0);
 			}
 			@Override
 			public void keyReleased(KeyEvent e) {
-				UIFormattedTextField.this.onKeyPressed(e.getKeyCode(), e.getKeyChar(), 1);
+				UIFormattedTextField.this.keyPressedAction.onKeyPressed(e.getKeyCode(), e.getKeyChar(), 1);
 			}
 		});
 	}
 	
+	public void setKeyPressedAction(KeyPressedAction keyPressedAction) {
+		this.keyPressedAction = keyPressedAction;
+	}
+	
+	@Override
 	public void onKeyPressed(int keyCode, char keyChar, int status) {}
 	
 	@Override

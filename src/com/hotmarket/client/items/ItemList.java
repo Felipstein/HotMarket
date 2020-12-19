@@ -3,63 +3,87 @@ package com.hotmarket.client.items;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.hotmarket.exceptions.NegativeNumberException;
+import com.hotmarket.exceptions.ZeroNumberException;
 import com.hotmarket.files.FileItems;
+import com.hotmarket.frames.market.stock.StockItemsTable;
 
 public class ItemList {
 	
+	private StockItemsTable table;
+	
 	private List<Item> items;
+	private boolean archiveModifier;
 	
-	public ItemList() {
-		this.items = new ArrayList<>();	
+	public ItemList(boolean archiveModifier) {
+		this(new ArrayList<>(), archiveModifier);
 	}
 	
-	public Item addItem(String id, String name, int amountStock, float price) {
-		return this.addItem(getFreeOrder(), id, name, amountStock, price);
+	public ItemList(List<Item> items, boolean archiveModifier) {
+		this.items = items == null ? new ArrayList<>() : items;
+		this.archiveModifier = archiveModifier;
 	}
 	
-	public Item addItem(int order, String id, String name, int amountStock, float price) {
-		Item item = new Item(order, id, name, amountStock, price);
+	public Item addItem(String name, int amountStock, float price, float discount) {
+		return this.addItem(getFreeId(), name, amountStock, price, discount);
+	}
+	
+	public int addItemGetId(String name, int amountStock, float price, float discount) {
+		return this.addItem(getFreeId(), name, amountStock, price, discount).getId();
+	}
+	
+	public Item addItem(int id, String name, int amountStock, float price, float discount) {
+		Item item;
+		try {
+			item = new Item(id, name, amountStock, price, discount);
+		} catch (NegativeNumberException | ZeroNumberException e) {
+			e.printToClient();
+			return null;
+		}
 		this.items.add(item);
-		FileItems.archive.addItem(item);
+		if(archiveModifier) {
+			FileItems.archive.addItem(item);
+		}
+		if(table != null) {
+			this.table.getModel().addRow(item.getValues(true));
+		}
 		return item;
 	}
 	
-	public void removeItem(int order) {
-		this.removeItem(getItem(order));
+	public void updateItem(Item item, Object modifiedTo, int currentColumn) {
+		int id = item.getId();
+		int indexOf = this.items.indexOf(getItem(id));
+		int row = this.table.getRowOfItem(getItem(id));
+		this.items.set(indexOf, item);
+		if(table != null) {
+			this.table.getModel().setValueAt(modifiedTo, row, currentColumn);
+		}
 	}
 	
-	public void removeItem(String id) {
+	public void removeItem(int id) {
 		this.removeItem(getItem(id));
 	}
 	
 	public void removeItem(Item item) {
 		this.items.remove(item);
-		FileItems.archive.removeItem(item);
+		if(archiveModifier) {
+			FileItems.archive.removeItem(item);
+		}
+		if(table != null) {
+			this.table.getModel().removeRow(table.getRowOfItem(item));
+		}
 	}
 	
-	public Item getItem(int order) {
+	public Item getItem(int id) {
 		for(Item item : items) {
-			if(item.getOrder() == order) {
+			if(item.getId() == id) {
 				return item;
 			}
 		}
 		return null;
 	}
 	
-	public boolean hasItem(int order) {
-		return getItem(order) != null;
-	}
-	
-	public Item getItem(String id) {
-		for(Item item : items) {
-			if(item.getId().equalsIgnoreCase(id)) {
-				return item;
-			}
-		}
-		return null;
-	}
-	
-	public boolean hasItem(String id) {
+	public boolean hasItem(int id) {
 		return getItem(id) != null;
 	}
 	
@@ -80,12 +104,28 @@ public class ItemList {
 		return items;
 	}
 	
-	public int getFreeOrder() {
-		int order = 0;
-		while(getItem(order) != null) {
-			++order;
+	public int getFreeId() {
+		int id = 1;
+		while(getItem(id) != null) {
+			++id;
 		}
-		return order;
+		return id;
+	}
+	
+	public boolean isArchiveModifier() {
+		return archiveModifier;
+	}
+	
+	public boolean hasTable() {
+		return table != null;
+	}
+	
+	public void setTable(StockItemsTable table) {
+		this.table = table;
+	}
+	
+	public StockItemsTable getTable() {
+		return table;
 	}
 	
 }

@@ -7,13 +7,16 @@ import java.awt.event.KeyEvent;
 import javax.swing.JTextField;
 
 import com.hotmarket.frames.recicle.InputListener;
+import com.hotmarket.frames.recicle.KeyPressedAction;
 import com.hotmarket.frames.ui.UIPanel;
 
-public class UITextField extends JTextField implements ActionListener {
+public class UITextField extends JTextField implements ActionListener, KeyPressedAction {
 	
 	private static final long serialVersionUID = 173529740741128940L;
 	
 	private UIPanel panel;
+	
+	private KeyPressedAction keyPressedAction;
 	
 	public UITextField(UIPanel panel, String initialText, int x, int y, int width, int height) {
 		super(initialText);
@@ -37,19 +40,25 @@ public class UITextField extends JTextField implements ActionListener {
 	
 	private void constructor(UIPanel panel, int x, int y, int width, int height) {
 		this.panel = panel;
+		this.keyPressedAction = this;
 		this.setBounds(x, y, width, height);
 		this.addKeyListener(new InputListener() {
 			@Override
 			public void keyPressed(KeyEvent e) {
-				UITextField.this.onKeyPressed(e.getKeyCode(), e.getKeyChar(), 0);
+				UITextField.this.keyPressedAction.onKeyPressed(e.getKeyCode(), e.getKeyChar(), 0);
 			}
 			@Override
 			public void keyReleased(KeyEvent e) {
-				UITextField.this.onKeyPressed(e.getKeyCode(), e.getKeyChar(), 1);
+				UITextField.this.keyPressedAction.onKeyPressed(e.getKeyCode(), e.getKeyChar(), 1);
 			}
 		});
 	}
 	
+	public void setKeyPressedAction(KeyPressedAction keyPressedAction) {
+		this.keyPressedAction = keyPressedAction;
+	}
+	
+	@Override
 	public void onKeyPressed(int keyCode, char keyChar, int status) {}
 	
 	@Override

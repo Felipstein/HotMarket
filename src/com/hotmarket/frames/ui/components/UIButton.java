@@ -18,15 +18,20 @@ public class UIButton extends JButton implements ActionListener {
 		this(panel, text, x, y, width, height, null);
 	}
 	
+	public UIButton(String text, int x, int y, int width, int height, ConsumerAction action) {
+		this(null, text, x, y, width, height, action);
+	}
+	
+	public UIButton(String text, int x, int y, int width, int height) {
+		this(null, text, x, y, width, height);
+	}
+	
 	public UIButton(UIPanel panel, String text, int x, int y, int width, int height, ConsumerAction action) {
 		super(text);
 		this.panel = panel;
 		this.setBounds(x, y, width, height);
 		this.addActionListener(action == null ? this : action);
-	}
-	
-	public UIButton(String text, int x, int y, int width, int height) {
-		this(null, text, x, y, width, height);
+		this.setFocusable(false);
 	}
 	
 	public UIPanel getPanel() {
