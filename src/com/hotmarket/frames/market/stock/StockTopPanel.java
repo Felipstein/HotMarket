@@ -79,7 +79,7 @@ public class StockTopPanel extends UIPanel {
 		exitFilter.setEnabled(false);
 		
 		UITextFieldWithLabel f1 = new UITextFieldWithLabel(p1, "Baixas:", false, "1", p1.getComponent("downitem").getX() + width / 2 - 23 - 5, 8, 55, 25);
-		f1.setKeyPressedAction(new KeyPressedAction() {
+		f1.addKeyPressedAction(new KeyPressedAction() {
 			@Override
 			public void onKeyPressed(int keyCode, char keyChar, int status) {
 				downItem.setToolTipText("Dar " + f1.getText() + " baixa(s) no estoque do(s) item(ns) selecionado(s)");
@@ -91,7 +91,7 @@ public class StockTopPanel extends UIPanel {
 		this.componentsToToggle.add(f1.getLabel());
 		
 		UITextFieldWithLabel f2 = new UITextFieldWithLabel(p2, "Quantia:", false, "1", p2.getComponent("addstockitem").getX() + width / 2 - 23 - 5, 8, 60, 25);
-		f2.setKeyPressedAction(new KeyPressedAction() {
+		f2.addKeyPressedAction(new KeyPressedAction() {
 			@Override
 			public void onKeyPressed(int keyCode, char keyChar, int status) {
 				addStockItem.setToolTipText("Adicionar " + f2.getText() + " unidade(s) no estoque do(s) item(ns) selecionado(s)");

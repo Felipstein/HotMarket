@@ -3,6 +3,8 @@ package com.hotmarket.frames.ui.components;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JTextField;
 
@@ -16,7 +18,7 @@ public class UITextField extends JTextField implements ActionListener, KeyPresse
 	
 	private UIPanel panel;
 	
-	private KeyPressedAction keyPressedAction;
+	private List<KeyPressedAction> keyPressedActions;
 	
 	public UITextField(UIPanel panel, String initialText, int x, int y, int width, int height) {
 		super(initialText);
@@ -40,22 +42,23 @@ public class UITextField extends JTextField implements ActionListener, KeyPresse
 	
 	private void constructor(UIPanel panel, int x, int y, int width, int height) {
 		this.panel = panel;
-		this.keyPressedAction = this;
+		this.keyPressedActions = new ArrayList<>();
+		this.keyPressedActions.add(this);
 		this.setBounds(x, y, width, height);
 		this.addKeyListener(new InputListener() {
 			@Override
 			public void keyPressed(KeyEvent e) {
-				UITextField.this.keyPressedAction.onKeyPressed(e.getKeyCode(), e.getKeyChar(), 0);
+				UITextField.this.keyPressedActions.forEach(action -> action.onKeyPressed(e.getKeyCode(), e.getKeyChar(), 0));
 			}
 			@Override
 			public void keyReleased(KeyEvent e) {
-				UITextField.this.keyPressedAction.onKeyPressed(e.getKeyCode(), e.getKeyChar(), 1);
+				UITextField.this.keyPressedActions.forEach(action -> action.onKeyPressed(e.getKeyCode(), e.getKeyChar(), 1));
 			}
 		});
 	}
 	
-	public void setKeyPressedAction(KeyPressedAction keyPressedAction) {
-		this.keyPressedAction = keyPressedAction;
+	public void addKeyPressedAction(KeyPressedAction keyPressedAction) {
+		this.keyPressedActions.add(keyPressedAction);
 	}
 	
 	@Override

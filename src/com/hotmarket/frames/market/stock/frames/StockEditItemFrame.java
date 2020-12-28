@@ -54,19 +54,19 @@ public class StockEditItemFrame extends UIFrame implements ModifiedSavedStatus {
 		UITextFieldWithLabel f2 = new UITextFieldWithLabel(p2, "Quantidade:", true, String.valueOf(item.getAmountStock()), p2.getWidth() / 2 + 20, 35, p2.getWidth() / 2 - 40, 23);
 		f1.setEnabled(false);
 		f1.getLabel().setEnabled(false);
-		f2.setKeyPressedAction(new ColorWarnKeyPressActionWithModified(this, f2, false));
+		f2.addKeyPressedAction(new ColorWarnKeyPressActionWithModified(this, f2, false));
 		p2.addComponent("f1", f1);
 		p2.addComponent("f2", f2);
 		
 		UITextFieldWithLabel f3 = new UITextFieldWithLabel(p2, "Nome:", true, item.getName(), 20, 88, p2.getWidth() - 40, 23);
-		f3.setKeyPressedAction(new ModifiedKeyPressAction(this));
+		f3.addKeyPressedAction(new ModifiedKeyPressAction(this));
 		f3.requestFocus();
 		p2.addComponent("f3", f3);
 		
 		UITextFieldWithLabel f4 = new UITextFieldWithLabel(p2, "Preço:", true, String.valueOf(item.getPrice()), 20, 141, p2.getWidth() / 2 - 40, 30);
 		UITextFieldWithLabel f5 = new UITextFieldWithLabel(p2, "Desconto:", true, String.valueOf(item.getDiscount()), p2.getWidth() / 2 + 20, 141, p2.getWidth() / 2 - 40, 30);
-		f4.setKeyPressedAction(new ColorWarnKeyPressActionWithModified(this, f4, true));
-		f5.setKeyPressedAction(new ColorWarnKeyPressActionWithModified(this, f5, true));
+		f4.addKeyPressedAction(new ColorWarnKeyPressActionWithModified(this, f4, true));
+		f5.addKeyPressedAction(new ColorWarnKeyPressActionWithModified(this, f5, true));
 		p2.addComponent("f4", f4);
 		p2.addComponent("f5", f5);
 	}

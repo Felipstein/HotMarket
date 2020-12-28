@@ -35,7 +35,7 @@ public class StockRemoveItemFrame extends UIFrame {
 		p.setPerfectBorder(null);
 		
 		UITextFieldWithLabel field = new UITextFieldWithLabel(p, "ID:", true, "1", 20, 20, p.getWidth() - 40, 23);
-		field.setKeyPressedAction(new ColorWarnKeyPressAction(field, false));
+		field.addKeyPressedAction(new ColorWarnKeyPressAction(field, false));
 		p.addComponent("id", field);
 		
 		NamedUIButton b1 = new NamedUIButton("remove", "Remover", 0, p.getHeight() - 42, 100, 30, e -> this.removeItem());

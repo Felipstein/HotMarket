@@ -86,7 +86,7 @@ public class StockFilterFrame extends UIFrame {
 		p.addComponent("b-clear", clear);
 		
 		UITextFieldWithLabel idField = new UITextFieldWithLabel(p, "ID:", false, 10, 35, 100, 20);
-		idField.setKeyPressedAction(new DisableAllComponentsPressAction(this, idField, false).ignoreNull(true));
+		idField.addKeyPressedAction(new DisableAllComponentsPressAction(this, idField, false).ignoreNull(true));
 		p.addComponent("f-id", idField);
 		this.textFields.add(idField);
 		
@@ -121,6 +121,7 @@ public class StockFilterFrame extends UIFrame {
 			
 			UICheckBox nameCB = new UICheckBox("Ignorar diferença de MAIÚS./minús.", align.getTotalWidth(4) + 5, 60);
 			nameSettings.addComponent("cb-name", nameCB);
+			nameCB.setSelected(true);
 			this.checkBoxs.add(nameCB);
 			this.componentsToDisable.add(nameCB);
 		}
@@ -132,14 +133,14 @@ public class StockFilterFrame extends UIFrame {
 			this.componentsToDisable.add(stockSettings);
 			
 			UITextFieldWithLabel minField = new UITextFieldWithLabel(stockSettings, "Quantidade mínima no estoque:", true, 10, 10, stockSettings.getWidth() / 2 - 20, 25);
-			minField.setKeyPressedAction(new ColorWarnKeyPressAction(minField, false).ignoreNull(true));
+			minField.addKeyPressedAction(new ColorWarnKeyPressAction(minField, false).ignoreNull(true));
 			stockSettings.addComponent("f-stockmin", minField);
 			this.textFields.add(minField);
 			this.componentsToDisable.add(minField);
 			this.componentsToDisable.add(minField.getLabel());
 			
 			UITextFieldWithLabel maxField = new UITextFieldWithLabel(stockSettings, "Quantidade máxima no estoque:", true, stockSettings.getWidth() / 2 + 10, 10, stockSettings.getWidth() / 2 - 20, 25);
-			maxField.setKeyPressedAction(new ColorWarnKeyPressAction(maxField, false).ignoreNull(true));
+			maxField.addKeyPressedAction(new ColorWarnKeyPressAction(maxField, false).ignoreNull(true));
 			stockSettings.addComponent("f-stockmax", maxField);
 			this.textFields.add(maxField);
 			this.componentsToDisable.add(maxField);
@@ -153,28 +154,28 @@ public class StockFilterFrame extends UIFrame {
 			this.componentsToDisable.add(pdSettings);
 			
 			UITextFieldWithLabel minPriceField = new UITextFieldWithLabel(pdSettings, "Quantidade mínima do preço:", true, 10, 10, pdSettings.getWidth() / 2 - 20, 25);
-			minPriceField.setKeyPressedAction(new ColorWarnKeyPressAction(minPriceField, false).ignoreNull(true));
+			minPriceField.addKeyPressedAction(new ColorWarnKeyPressAction(minPriceField, false).ignoreNull(true));
 			pdSettings.addComponent("f-pricemin", minPriceField);
 			this.textFields.add(minPriceField);
 			this.componentsToDisable.add(minPriceField);
 			this.componentsToDisable.add(minPriceField.getLabel());
 			
 			UITextFieldWithLabel maxPriceField = new UITextFieldWithLabel(pdSettings, "Quantidade máxima do preço:", true, pdSettings.getWidth() / 2 + 10, 10, pdSettings.getWidth() / 2 - 20, 25);
-			maxPriceField.setKeyPressedAction(new ColorWarnKeyPressAction(maxPriceField, false).ignoreNull(true));
+			maxPriceField.addKeyPressedAction(new ColorWarnKeyPressAction(maxPriceField, false).ignoreNull(true));
 			pdSettings.addComponent("f-pricemax", maxPriceField);
 			this.textFields.add(maxPriceField);
 			this.componentsToDisable.add(maxPriceField);
 			this.componentsToDisable.add(maxPriceField.getLabel());
 			
 			UITextFieldWithLabel minDiscountPrice = new UITextFieldWithLabel(pdSettings, "Quantidade mínima de desconto:", true, 10, 62, pdSettings.getWidth() / 2 - 20, 25);
-			minDiscountPrice.setKeyPressedAction(new ColorWarnKeyPressAction(minDiscountPrice, false).ignoreNull(true));
+			minDiscountPrice.addKeyPressedAction(new ColorWarnKeyPressAction(minDiscountPrice, false).ignoreNull(true));
 			pdSettings.addComponent("f-discountmin", minDiscountPrice);
 			this.textFields.add(minDiscountPrice);
 			this.componentsToDisable.add(minDiscountPrice);
 			this.componentsToDisable.add(minDiscountPrice.getLabel());
 			
 			UITextFieldWithLabel maxDiscountPrice = new UITextFieldWithLabel(pdSettings, "Quantidade máxima de desconto:", true, pdSettings.getWidth() / 2 + 10, 62, pdSettings.getWidth() / 2 - 20, 25);
-			maxDiscountPrice.setKeyPressedAction(new ColorWarnKeyPressAction(maxDiscountPrice, false).ignoreNull(true));
+			maxDiscountPrice.addKeyPressedAction(new ColorWarnKeyPressAction(maxDiscountPrice, false).ignoreNull(true));
 			pdSettings.addComponent("f-discountmax", maxDiscountPrice);
 			this.textFields.add(maxDiscountPrice);
 			this.componentsToDisable.add(maxDiscountPrice);
@@ -222,6 +223,7 @@ public class StockFilterFrame extends UIFrame {
 		this.textFields.forEach(tf -> ((UITextFieldWithLabel) tf).getLabel().setForeground(Color.black));
 		this.checkBoxs.forEach(cb -> cb.setSelected(false));
 		this.componentsToDisable.forEach(c -> c.setEnabled(true));
+		((UICheckBox) this.getContentPane().getPanel("settings").getPanel("namesettings").getComponent("cb-name")).setSelected(true);
 		this.ignoreSettings();
 	}
 	
@@ -440,19 +442,17 @@ public class StockFilterFrame extends UIFrame {
 					if(NAME_SEARCH_OPTIONS.getValue() == NameSearchOptions.CONTAINS) {
 						if(itemName.contains(valueName)) {
 							items.addItem(item);
-							continue;
 						}
 					} else if(NAME_SEARCH_OPTIONS.getValue() == NameSearchOptions.EQUALS) {
 						if(itemName.equals(valueName)) {
 							items.addItem(item);
-							continue;
 						}
 					} else if(NAME_SEARCH_OPTIONS.getValue() == NameSearchOptions.STARTS_WITH) {
 						if(itemName.startsWith(valueName)) {
 							items.addItem(item);
-							continue;
 						}
 					}
+					continue;
 				}
 				if(!MIN_STOCK_VALUE.ignoreValue()) {
 					if(item.getAmountStock() < MIN_STOCK_VALUE.getValue()) {
