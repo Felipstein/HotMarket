@@ -14,7 +14,7 @@ import com.hotmarket.frames.ui.UIPanel;
 import com.hotmarket.frames.ui.components.NamedUIButton;
 import com.hotmarket.frames.ui.components.UITextField;
 import com.hotmarket.frames.ui.components.UITextFieldWithLabel;
-import com.hotmarket.utils.ButtonAlignmentX;
+import com.hotmarket.utils.alignments.ButtonAlignmentX;
 
 public class StockRemoveItemFrame extends UIFrame {
 	
@@ -23,7 +23,7 @@ public class StockRemoveItemFrame extends UIFrame {
 	private final StockFrame frame;
 	
 	public StockRemoveItemFrame(StockFrame frame) {
-		super("Remover um item", 240, 130);
+		super("Remover um Item", 240, 130);
 		this.frame = frame;
 		this.configureFrame(false, false);
 		this.configureElements();

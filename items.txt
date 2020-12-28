@@ -1,10 +1,16 @@
-1%;%aaaaaeeee%;%30%;%0.0%;%0.0
-2%;%aaaaa%;%30%;%0.0%;%0.0
-3%;%fawfawfawf%;%30%;%0.0%;%0.0
-4%;%gdfgfdgfdg%;%30%;%0.0%;%0.0
-5%;%fawgawegaewhgawe%;%30%;%0.0%;%0.0
-6%;%fsdfds vxcvxcsd%;%30%;%0.0%;%0.0
-7%;%dawfawfgawawgtfreas%;%30%;%0.0%;%0.0
-8%;%fsdfdsfaewfawf%;%30%;%0.0%;%0.0
-9%;%fawfawfsdfsdfg%;%30%;%0.0%;%0.0
-10%;%dwafawfazsgsfdg%;%30%;%0.0%;%0.0
+1%;%NESCAU 500 ML COM ESPERMAS%;%0%;%7.5%;%0.0
+2%;%NESCAU 250 ML COM ESPERMAS%;%20%;%7.5%;%0.0
+3%;%NESCAU 800 ML COM ESPERMAS%;%20%;%7.5%;%0.0
+4%;%NESCAU 1 L COM ESPERMAS%;%20%;%7.5%;%0.0
+5%;%NUTELLA 230 ML COM ESPERMAS%;%20%;%7.5%;%0.0
+6%;%BISCOITO CHAMPANHE%;%20%;%7.5%;%0.0
+7%;%MAQUINA A VAPOR%;%20%;%7.5%;%0.0
+8%;%MOTOR DE CARRO 3.2%;%14%;%1300.32%;%0.0
+9%;%GILETTE PRA PAU%;%0%;%7.5%;%0.0
+11%;%CUECA DO PIEBA%;%140%;%7.5%;%0.0
+12%;%CALCINHA DO FAR%;%141%;%7.5%;%0.0
+13%;%VIBRADOR%;%157%;%7.5%;%0.0
+14%;%DIODO%;%157%;%7.5%;%0.0
+15%;%KONO DIO DA%;%0%;%7.5%;%0.0
+16%;%CHICLETE%;%0%;%7.5%;%0.0
+10%;%aaaaa%;%1%;%0.0%;%0.0

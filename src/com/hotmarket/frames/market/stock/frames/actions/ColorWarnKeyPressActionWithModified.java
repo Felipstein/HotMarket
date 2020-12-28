@@ -2,7 +2,7 @@ package com.hotmarket.frames.market.stock.frames.actions;
 
 import java.awt.Color;
 
-import com.hotmarket.frames.market.stock.frames.StockAddItemFrame;
+import com.hotmarket.frames.market.stock.ModifiedSavedStatus;
 import com.hotmarket.frames.ui.components.UITextFieldWithLabel;
 
 public class ColorWarnKeyPressActionWithModified extends ModifiedKeyPressAction {
@@ -11,7 +11,7 @@ public class ColorWarnKeyPressActionWithModified extends ModifiedKeyPressAction 
 	
 	private boolean parseToReal;
 	
-	public ColorWarnKeyPressActionWithModified(StockAddItemFrame frame, UITextFieldWithLabel textField, boolean parseToReal) {
+	public ColorWarnKeyPressActionWithModified(ModifiedSavedStatus frame, UITextFieldWithLabel textField, boolean parseToReal) {
 		super(frame);
 		this.textField = textField;
 		this.parseToReal = parseToReal;

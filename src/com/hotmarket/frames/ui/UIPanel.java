@@ -84,6 +84,19 @@ public class UIPanel extends JPanel {
 		});
 	}
 	
+	public void loadComponentsKeyListeners() {
+		this.components.getOnlyComponents().forEach(component -> component.addKeyListener(new InputListener() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				UIPanel.this.onKeyTyped(e.getKeyCode(), e.getKeyChar(), 0);
+			}
+			@Override
+			public void keyReleased(KeyEvent e) {
+				UIPanel.this.onKeyTyped(e.getKeyCode(), e.getKeyChar(), 1);
+			}
+		}));
+	}
+	
 	public void configurePanel() {
 		this.setLayout(null);
 		this.setPreferredSize(dimension);

@@ -5,6 +5,7 @@ import java.text.DecimalFormat;
 import com.hotmarket.exceptions.NegativeNumberException;
 import com.hotmarket.exceptions.ZeroNumberException;
 import com.hotmarket.files.FileItems;
+import com.hotmarket.frames.market.stock.StockItemsTable;
 
 public class Item {
 	
@@ -16,6 +17,9 @@ public class Item {
 	private float price;
 	
 	private float discount;
+	
+	private boolean tableUpdaterMode;
+	private ItemList location;
 	
 	public Item(int id, String name, int amountStock, float price, float discount) throws NegativeNumberException, ZeroNumberException {
 		if(id < 0) {
@@ -41,6 +45,9 @@ public class Item {
 	public void setName(String name) {
 		this.name = name;
 		FileItems.archive.updateItem(this);
+		if(tableUpdaterMode && location != null) {
+			this.location.updateItem(this, name, StockItemsTable.NAME_COLUMN);
+		}
 	}
 	
 	public int getAmountStock() {
@@ -50,11 +57,17 @@ public class Item {
 	public void setAmountStock(int amountStock) {
 		this.amountStock = amountStock;
 		FileItems.archive.updateItem(this);
+		if(tableUpdaterMode && location != null) {
+			this.location.updateItem(this, amountStock, StockItemsTable.STOCK_COLUMN);
+		}
 	}
 	
 	public void addAmountStock(int add) {
 		this.amountStock += add;
 		FileItems.archive.updateItem(this);
+		if(tableUpdaterMode && location != null) {
+			this.location.updateItem(this, amountStock, StockItemsTable.STOCK_COLUMN);
+		}
 	}
 	
 	public void addAmountStock() {
@@ -64,6 +77,9 @@ public class Item {
 	public void subtractAmountStock(int subtract) {
 		this.amountStock -= subtract;
 		FileItems.archive.updateItem(this);
+		if(tableUpdaterMode && location != null) {
+			this.location.updateItem(this, amountStock, StockItemsTable.STOCK_COLUMN);
+		}
 	}
 	
 	public void subtractAmountStock() {
@@ -77,6 +93,9 @@ public class Item {
 	public void setPrice(float price) {
 		this.price = price;
 		FileItems.archive.updateItem(this);
+		if(tableUpdaterMode && location != null) {
+			this.location.updateItem(this, price, StockItemsTable.PRICE_COLUMN);
+		}
 	}
 	
 	public float getDiscount() {
@@ -86,10 +105,13 @@ public class Item {
 	public void setDiscount(float discount) {
 		this.discount = discount;
 		FileItems.archive.updateItem(this);
+		if(tableUpdaterMode && location != null) {
+			this.location.updateItem(this, discount, StockItemsTable.DISCOUNT_COLUMN);
+		}
 	}
 	
 	public Object[] getValues(boolean formatted) {
-		DecimalFormat format = formatted ? new DecimalFormat("###,###.##") : null;
+		DecimalFormat format = formatted ? new DecimalFormat("R$ ###,###.##") : null;
 		return new Object[] {id, name, amountStock, formatted ? format.format(price) : price, formatted ? format.format(discount) : discount};
 	}
 	
@@ -110,6 +132,30 @@ public class Item {
 		float price = Float.parseFloat(split[3]);
 		float discount = Float.parseFloat(split[4]);
 		return new Item(id, name, amountStock, price, discount);
+	}
+	
+	public boolean isTableUpdaterMode() {
+		return tableUpdaterMode;
+	}
+	
+	public void startTableUpdaterMode() {
+		this.tableUpdaterMode = true;
+	}
+	
+	public void stopTableUpdaterMode() {
+		this.tableUpdaterMode = false;
+	}
+	
+	public ItemList getLocation() {
+		return location;
+	}
+	
+	public boolean hasLocation() {
+		return location != null;
+	}
+	
+	public void setLocation(ItemList location) {
+		this.location = location;
 	}
 	
 }

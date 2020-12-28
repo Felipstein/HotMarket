@@ -1,5 +1,6 @@
 package com.hotmarket.client.items;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,6 +41,7 @@ public class ItemList {
 			e.printToClient();
 			return null;
 		}
+		item.setLocation(this);
 		this.items.add(item);
 		if(archiveModifier) {
 			FileItems.archive.addItem(item);
@@ -50,12 +52,26 @@ public class ItemList {
 		return item;
 	}
 	
+	public void addItem(Item item) {
+		item.setLocation(this);
+		this.items.add(item);
+		if(archiveModifier) {
+			FileItems.archive.addItem(item);
+		}
+		if(table != null) {
+			this.table.getModel().addRow(item.getValues(true));
+		}
+	}
+	
 	public void updateItem(Item item, Object modifiedTo, int currentColumn) {
 		int id = item.getId();
 		int indexOf = this.items.indexOf(getItem(id));
 		int row = this.table.getRowOfItem(getItem(id));
 		this.items.set(indexOf, item);
 		if(table != null) {
+			if(currentColumn == StockItemsTable.PRICE_COLUMN || currentColumn == StockItemsTable.DISCOUNT_COLUMN) {
+				modifiedTo = new DecimalFormat("R$ ###,###.##").format((float) modifiedTo);
+			}
 			this.table.getModel().setValueAt(modifiedTo, row, currentColumn);
 		}
 	}
@@ -71,6 +87,7 @@ public class ItemList {
 		}
 		if(table != null) {
 			this.table.getModel().removeRow(table.getRowOfItem(item));
+			this.table.resizeColumns();
 		}
 	}
 	

@@ -13,6 +13,8 @@ public class StockFrame extends UIFrame {
 	public final StockTopPanel topPanel;
 	public final StockBottomPanel bottomPanel;
 	
+	private boolean filterMode;
+	
 	public StockFrame() {
 		super("Tabela dos itens", 1080, 600);
 		this.configureFrame(true, false);
@@ -41,6 +43,14 @@ public class StockFrame extends UIFrame {
 		frame.setVisible(true);
 		frame.bottomPanel.getTable().requestFocus();
 		return frame;
+	}
+	
+	public boolean isFilterMode() {
+		return filterMode;
+	}
+	
+	public void setFilterMode(boolean filterMode) {
+		this.filterMode = filterMode;
 	}
 	
 }

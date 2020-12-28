@@ -30,7 +30,7 @@ public class UITable extends JTable {
 		this.setBounds(x, y, width, height);
 	}
 	
-	public void resizeColumnsWidth() {
+	public void resizeColumns() {
 		if(autoResizeMode != AUTO_RESIZE_OFF) {
 			return;
 		}

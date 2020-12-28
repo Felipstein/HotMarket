@@ -23,6 +23,10 @@ public class UIFrame extends JFrame {
 	public static final int KEY_PRESSED = 0;
 	public static final int KEY_RELEASED = 1;
 	
+	public static final int MOUSE_LEFT_BUTTON = 1;
+	public static final int MOUSE_RIGHT_BUTTON = 3;
+	public static final int MOUSE_MIDDLE_BUTTON = 2;
+	
 	protected UIPanel pane;
 	
 	public UIFrame(String title, int width, int height) {

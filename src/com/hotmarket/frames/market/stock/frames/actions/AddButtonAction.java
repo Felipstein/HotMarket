@@ -3,6 +3,7 @@ package com.hotmarket.frames.market.stock.frames.actions;
 import java.awt.event.ActionEvent;
 
 import com.hotmarket.client.items.Item;
+import com.hotmarket.frames.market.stock.StockItemsTable;
 import com.hotmarket.frames.market.stock.frames.StockAddItemFrame;
 import com.hotmarket.frames.optionpanes.JOptionPanesUtil;
 import com.hotmarket.frames.recicle.ConsumerAction;
@@ -42,7 +43,7 @@ public class AddButtonAction implements ConsumerAction {
 		}
 		float price;
 		try {
-			price = Float.parseFloat(f4);
+			price = Float.parseFloat(f4.replace(",", "."));
 			if(price < 0) {
 				String reason = "O valor \"Preço\" não pode ser negativo.";
 				JOptionPanesUtil.anErrorExcepted(reason);
@@ -57,7 +58,7 @@ public class AddButtonAction implements ConsumerAction {
 		}
 		float discount;
 		try {
-			discount = Float.parseFloat(f5);
+			discount = Float.parseFloat(f5.replace(",", "."));
 			if(discount < 0) {
 				String reason = "O valor \"Desconto inicial\" não pode ser negativo.";
 				JOptionPanesUtil.anErrorExcepted(reason);
@@ -70,9 +71,11 @@ public class AddButtonAction implements ConsumerAction {
 			Logger.logger.error("Falha ao processar a ação do botão Adicionar no frame Adicionar Item. " + reason);
 			return;
 		}
-		this.frame.hasModified = false;
+		this.frame.setModified(false);
 		this.frame.close();
-		Item item = this.frame.getFrame().bottomPanel.getTable().getItems().addItem(name, stock, price, discount);
+		StockItemsTable table = this.frame.getFrame().bottomPanel.getTable();
+		Item item = table.getItems().addItem(name, stock, price, discount);
+		table.resizeColumns();
 		Logger.logger.info("Item " + item.toString() + " adicionado na lista de items principal.");
 	}
 	

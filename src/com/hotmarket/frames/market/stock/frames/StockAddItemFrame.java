@@ -2,6 +2,7 @@ package com.hotmarket.frames.market.stock.frames;
 
 import javax.swing.JOptionPane;
 
+import com.hotmarket.frames.market.stock.ModifiedSavedStatus;
 import com.hotmarket.frames.market.stock.StockFrame;
 import com.hotmarket.frames.market.stock.frames.actions.AddButtonAction;
 import com.hotmarket.frames.market.stock.frames.actions.ColorWarnKeyPressActionWithModified;
@@ -11,15 +12,15 @@ import com.hotmarket.frames.ui.UIPanel;
 import com.hotmarket.frames.ui.components.NamedUIButton;
 import com.hotmarket.frames.ui.components.UITextField;
 import com.hotmarket.frames.ui.components.UITextFieldWithLabel;
-import com.hotmarket.utils.ButtonAlignmentX;
+import com.hotmarket.utils.alignments.ButtonAlignmentX;
 
-public class StockAddItemFrame extends UIFrame {
+public class StockAddItemFrame extends UIFrame implements ModifiedSavedStatus {
 	
 	private static final long serialVersionUID = -4475429401715317863L;
 	
 	private final StockFrame frame;
 	
-	public boolean hasModified;
+	private boolean modified;
 	
 	public StockAddItemFrame(StockFrame frame) {
 		super("Adicionar um novo Item", 350, 275);
@@ -49,12 +50,12 @@ public class StockAddItemFrame extends UIFrame {
 		f1.setEnabled(false);
 		f1.getLabel().setEnabled(false);
 		f2.setKeyPressedAction(new ColorWarnKeyPressActionWithModified(this, f2, false));
-		f2.setFocusable(false);
 		p2.addComponent("f1", f1);
 		p2.addComponent("f2", f2);
 		
 		UITextFieldWithLabel f3 = new UITextFieldWithLabel(p2, "Nome:", true, 20, 88, p2.getWidth() - 40, 23);
 		f3.setKeyPressedAction(new ModifiedKeyPressAction(this));
+		f3.requestFocus();
 		p2.addComponent("f3", f3);
 		
 		UITextFieldWithLabel f4 = new UITextFieldWithLabel(p2, "Preço:", true, "0", 20, 141, p2.getWidth() / 2 - 40, 30);
@@ -72,7 +73,7 @@ public class StockAddItemFrame extends UIFrame {
 		((UITextField) p.getComponent("f2")).setText("1");
 		((UITextField) p.getComponent("f4")).setText("0");
 		((UITextField) p.getComponent("f5")).setText("0");
-		this.hasModified = false;
+		this.modified = false;
 	}
 	
 	public String getValueOfTextField(String textFieldId) {
@@ -80,7 +81,7 @@ public class StockAddItemFrame extends UIFrame {
 	}
 	
 	public void close() {
-		if(hasModified) {
+		if(modified) {
 			int option = JOptionPane.showConfirmDialog(null, "Você deseja descartar esse novo item?", "Descartar Item", JOptionPane.YES_NO_OPTION);
 			if(option == 1) {
 				return;
@@ -96,6 +97,16 @@ public class StockAddItemFrame extends UIFrame {
 	
 	public StockFrame getFrame() {
 		return frame;
+	}
+	
+	@Override
+	public boolean hasModified() {
+		return modified;
+	}
+	
+	@Override
+	public void setModified(boolean modified) {
+		this.modified = modified;
 	}
 	
 }
