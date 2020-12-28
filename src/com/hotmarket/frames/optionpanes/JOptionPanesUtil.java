@@ -16,4 +16,8 @@ public class JOptionPanesUtil {
 		return JOptionPane.showConfirmDialog(null, message, title, JOptionPane.YES_NO_OPTION);
 	}
 	
+	public static void thatIsSoCool(String message, String title) {
+		JOptionPane.showMessageDialog(null, message, title, JOptionPane.INFORMATION_MESSAGE);
+	}
+	
 }

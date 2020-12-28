@@ -9,10 +9,13 @@ import com.hotmarket.logger.Logger;
 
 public class Main {
 	
+	public static final String VERSION;
+	
 	static {
 		FileLog.archive = new FileLog();
 		Logger.logger = new Logger(true);
 		FileItems.archive = new FileItems();
+		VERSION = "0.0.1-SNAPSHOT";
 	}
 	
 	public static void main(String[] args) {

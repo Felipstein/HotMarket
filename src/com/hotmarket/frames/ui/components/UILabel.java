@@ -1,5 +1,7 @@
 package com.hotmarket.frames.ui.components;
 
+import java.awt.Font;
+
 import javax.swing.JLabel;
 
 import com.hotmarket.frames.ui.UIPanel;
@@ -43,6 +45,23 @@ public class UILabel extends JLabel {
 	
 	public UIPanel getPanel() {
 		return panel;
+	}
+	
+	public static UILabel createLabel(String text, int x, int y, boolean bold) {
+		UILabel label = new UILabel(text, x, y);
+		Font font = label.getFont();
+		label.setFont(new Font(font.getName(), bold ? Font.BOLD : font.getStyle(), font.getSize()));
+		if(bold) {
+			label.fix(label.getTextWidth() * 2, 0);
+		}
+		return label;
+	}
+	
+	public static UILabel createLabel(String text, int x, int y, boolean bold, int size) {
+		UILabel label = new UILabel(text, x, y);
+		Font font = label.getFont();
+		label.setFont(new Font(font.getName(), bold ? Font.BOLD : font.getStyle(), size));
+		return label;
 	}
 	
 }

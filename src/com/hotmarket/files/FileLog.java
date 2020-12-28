@@ -51,11 +51,14 @@ public class FileLog extends File {
 		log.delete();
 	}
 	
-	public void clearLogs() {
+	public int clearLogs() {
+		int total = 0;
 		File[] logs = new File("logs").listFiles();
 		for(File log : logs) {
 			log.delete();
+			++total;
 		}
+		return total;
 	}
 	
 }

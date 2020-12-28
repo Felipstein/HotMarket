@@ -212,9 +212,14 @@ public class StockFilterFrame extends UIFrame {
 		int height = p.getHeight() - 395;
 		UIButton filter = new UIButton("Filtrar", 10 + p.getWidth() / 2, 395, p.getWidth() / 2 - 25, height / 2 - 25, e -> this.filter());
 		UIButton cancel = new UIButton("Cancelar", 10 + p.getWidth() / 2, 10 + 380 + height / 2, p.getWidth() / 2 - 25, height / 2 - 25, e -> this.dispose());
+		filter.setEnabled(false);
 		
 		p.addComponent("b-filter", filter);
 		p.addComponent("b-cancel", cancel);
+		
+		this.textFields.forEach(tf -> tf.addKeyPressedAction((x, y, z) -> filter.setEnabled(true)));
+		this.checkBoxs.forEach(cb -> cb.addActionListener(e -> filter.setEnabled(true)));
+		this.radioButtons.forEach(rb -> rb.addActionListener(e -> filter.setEnabled(true)));
 	}
 	
 	public void clear() {
